@@ -1,10 +1,8 @@
 import os 
-import psycopg2
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 import json
 import requests
-from newsapi import NewsApiClient
 from flask_caching import Cache
 
 config = {
@@ -13,16 +11,9 @@ config = {
     "CACHE_DEFAULT_TIMEIOUT": 300
 }
 
-load_dotenv()
-
 app = Flask(__name__)
 app.config.from_mapping(config)
 cache = Cache(app)
-
-db_url = os.getenv("DATABASE_URL")
-db_user = os.getenv("DATABASE_USER")
-db_pass = os.getenv("DATABASE_PASSWORD")
-connection = psycopg2.connect(database=db_url,user="postgres",password="password")
 
 def convertKelvinToFahrenheit(kelvin):
     return round((kelvin - 273.15) * 1.8 + 32)
